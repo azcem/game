@@ -1,1 +1,2 @@
 # game
+Digital verification assignment.
