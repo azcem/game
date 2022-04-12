@@ -42,11 +42,13 @@ module game(
   assign WINNER = &count;
   assign GAMEOVER = state == gameover;
   
-  //----------state switching------------------
   always @(posedge clk or posedge rst) begin
     if (rst) state <= init;
     else state <= next;
   end
+  
+  always @(posedge LOSER) loser_score++;
+  always @(posedge WINNER) winner_score++;
   
   always @(state or count) begin
     case (state)
@@ -59,8 +61,8 @@ module game(
       end
       round: begin
         next <= round;
-        if (LOSER) loser_score++;
-        else if (WINNER) winner_score++;
+        //if (LOSER) loser_score++;
+        //else if (WINNER) winner_score++;
         if (loser_score == 15 || winner_score == 15) state <= gameover;
       end
       gameover: begin
